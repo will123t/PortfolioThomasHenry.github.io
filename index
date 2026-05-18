@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MON SITE — Portefolio Thomas Henry</title>
+  <title>MON SITE — Portefolio </title>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -561,11 +561,11 @@
       <div class="contact-info">
         <p>Disponible pour des projets freelance,<br>des collaborations ou simplement discuter.</p>
         <div class="contact-links">
-          <a class="contact-link" href="https://github.com/VOTRE-USERNAME" target="_blank">
-            <span></span>github.com/VOTRE-USERNAME
+          <a class="contact-link" href="https://github.com/will123t" target="_blank">
+            <span></span>github.com/Will
           </a>
-          <a class="contact-link" href="mailto:votre@email.com">
-            <span></span>votre@email.com
+          <a class="contact-link" href="mailto:thomas.henry.geii@gmail.com">
+            <span></span>thomas.henry.geii@gmail.com
           </a>
           <a class="contact-link" href="https://linkedin.com/in/votre-profil" target="_blank">
             <span></span>LinkedIn
@@ -575,11 +575,11 @@
       <div class="contact-form">
         <div class="form-group">
           <label>Nom</label>
-          <input type="text" placeholder="Votre nom"/>
+          <input type="text" placeholder="Thomas Henry"/>
         </div>
         <div class="form-group">
           <label>Email</label>
-          <input type="email" placeholder="votre@email.com"/>
+          <input type="email" placeholder="thomas.henry.geii@gmail.com"/>
         </div>
         <div class="form-group">
           <label>Message</label>
