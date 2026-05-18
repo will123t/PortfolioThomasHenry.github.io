@@ -1,10 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mon Site</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Bienvenue sur mon site</h1>
-  <p>Mon site est hébergé gratuitement avec GitHub Pages.</p>
+
+  <header>
+    <h1>Mon Premier Site</h1>
+    <nav>
+      <a href="#">Accueil</a>
+      <a href="#">À propos</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Bienvenue 👋</h2>
+    <p>Ce site est créé gratuitement avec GitHub Pages.</p>
+    <button>Découvrir</button>
+  </section>
+
+  <section class="cards">
+    <div class="card">
+      <h3>HTML</h3>
+      <p>Structure du site.</p>
+    </div>
+
+    <div class="card">
+      <h3>CSS</h3>
+      <p>Design et mise en page.</p>
+    </div>
+
+    <div class="card">
+      <h3>GitHub</h3>
+      <p>Hébergement gratuit.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Mon Site</p>
+  </footer>
+
 </body>
 </html>
