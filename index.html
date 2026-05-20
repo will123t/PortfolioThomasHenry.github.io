@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MON SITE — Portefolio </title>
+  <title>Portfolio — Thomas Henry</title>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -62,6 +62,7 @@
       letter-spacing: 4px;
       text-shadow: 0 0 16px var(--rouge-vif);
       text-decoration: none;
+      cursor: pointer;
     }
     .nav-logo span { color: var(--blanc); }
     nav ul { list-style: none; display: flex; gap: 2.5rem; }
@@ -75,6 +76,7 @@
       text-decoration: none;
       position: relative;
       transition: color 0.2s;
+      cursor: pointer;
     }
     nav ul a::after {
       content: '';
@@ -88,7 +90,31 @@
     nav ul a:hover { color: var(--blanc); }
     nav ul a:hover::after { width: 100%; }
 
-    /* HERO */
+    /* PAGES */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* PAGE TRANSITION */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .page.active { animation: fadeIn 0.35s ease-out; }
+
+    /* SCANLINES */
+    .scanlines {
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent, transparent 2px,
+        rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px
+      );
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ===================== PAGE ACCUEIL ===================== */
     #hero {
       position: relative;
       min-height: 100vh;
@@ -279,8 +305,8 @@
       box-shadow: 0 0 8px var(--rouge-vif);
     }
 
-    /* PROJETS */
-    #projets { background: var(--noir-2); }
+    /* PROJETS GRID */
+    #projets-section { background: var(--noir-2); }
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -294,6 +320,10 @@
       overflow: hidden;
       transition: all 0.3s;
       clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
     }
     .card::before {
       content: '';
@@ -315,15 +345,13 @@
       color: var(--rouge-vif);
       letter-spacing: 3px;
       text-transform: uppercase;
-      margin-bottom: 0.8rem;
     }
     .card h3 {
       font-family: 'Orbitron', monospace;
       font-size: 1.1rem;
       font-weight: 700;
-      margin-bottom: 0.8rem;
     }
-    .card p { font-size: 0.9rem; color: var(--gris-clair); line-height: 1.6; }
+    .card p { font-size: 0.9rem; color: var(--gris-clair); line-height: 1.6; flex: 1; }
     .card-corner {
       position: absolute;
       top: 0; right: 0;
@@ -331,9 +359,23 @@
       border-bottom: 18px solid var(--rouge);
       border-left: 18px solid transparent;
     }
+    .card-cta {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--rouge-vif);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+      transition: gap 0.2s;
+    }
+    .card:hover .card-cta { gap: 0.8rem; }
+    .card-cta::after { content: '→'; }
 
     /* COMPÉTENCES */
-    #competences { background: var(--noir); }
+    #competences-section { background: var(--noir); }
     .skills-list { display: flex; flex-direction: column; gap: 1.2rem; max-width: 600px; }
     .skill-item { display: flex; flex-direction: column; gap: 0.4rem; }
     .skill-header {
@@ -357,7 +399,7 @@
     @keyframes grow { to { transform: scaleX(1); } }
 
     /* CONTACT */
-    #contact { background: var(--noir-2); border-top: 1px solid var(--gris); }
+    #contact-section { background: var(--noir-2); border-top: 1px solid var(--gris); }
     .contact-inner {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -411,6 +453,143 @@
       box-shadow: 0 0 12px var(--rouge-glow);
     }
 
+    /* ===================== PAGES PROJET ===================== */
+    .projet-page {
+      min-height: 100vh;
+      padding-top: 64px;
+    }
+    .projet-hero {
+      position: relative;
+      padding: 5rem 8rem 4rem;
+      background: var(--noir-2);
+      border-bottom: 1px solid var(--rouge);
+      overflow: hidden;
+    }
+    .projet-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent, transparent 20px,
+        rgba(204,0,0,0.03) 20px, rgba(204,0,0,0.03) 21px
+      );
+    }
+    .back-btn {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gris-clair);
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      transition: color 0.2s;
+      padding: 0;
+    }
+    .back-btn:hover { color: var(--rouge-vif); }
+    .back-btn::before { content: '←'; font-size: 1rem; }
+    .projet-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--rouge-vif);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .projet-titre {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+    .projet-titre .accent { color: var(--rouge-vif); text-shadow: 0 0 24px var(--rouge-vif); }
+    .projet-description {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.95rem;
+      color: var(--gris-clair);
+      line-height: 1.8;
+      max-width: 640px;
+      border-left: 2px solid var(--rouge);
+      padding-left: 1rem;
+    }
+    .projet-meta {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .meta-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--rouge-vif);
+    }
+    .meta-value {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--blanc);
+    }
+    .projet-body {
+      padding: 4rem 8rem;
+      background: var(--noir);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+    .projet-section-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 5px;
+      color: var(--rouge-vif);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .projet-section-h {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--gris);
+    }
+    .projet-text {
+      font-size: 0.95rem;
+      color: var(--gris-clair);
+      line-height: 1.8;
+    }
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+    .tech-badge {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--rouge);
+      color: var(--rouge-vif);
+      background: rgba(204,0,0,0.08);
+      clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%);
+    }
+
     /* FOOTER */
     footer {
       position: relative;
@@ -436,25 +615,12 @@
       text-shadow: 0 0 8px var(--rouge-vif);
     }
 
-    /* SCANLINES */
-    .scanlines {
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(
-        to bottom,
-        transparent, transparent 2px,
-        rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px
-      );
-      pointer-events: none;
-      z-index: 999;
-    }
-
     /* RESPONSIVE */
     @media (max-width: 900px) {
-      section, nav, footer { padding-left: 2rem; padding-right: 2rem; }
+      section, nav, footer, .projet-hero, .projet-body { padding-left: 2rem; padding-right: 2rem; }
       #hero { padding: 6rem 2rem 4rem; }
       .stats-bar { grid-template-columns: 1fr 1fr; }
-      .contact-inner { grid-template-columns: 1fr; }
+      .contact-inner, .projet-body { grid-template-columns: 1fr; }
       .hero-deco { display: none; }
       #hero::after { display: none; }
     }
@@ -465,134 +631,330 @@
   <div class="scanlines"></div>
 
   <nav>
-    <a class="nav-logo" href="#">PORT<span>FOLIO</span></a>
+    <span class="nav-logo" onclick="showPage('accueil')">PORT<span>FOLIO</span></span>
     <ul>
-      <li><a href="#hero">Accueil</a></li>
-      <li><a href="#projets">Projets</a></li>
-      <li><a href="#competences">competences</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a onclick="showPage('accueil')">Accueil</a></li>
+      <li><a onclick="showPage('accueil', 'projets-section')">Projets</a></li>
+      <li><a onclick="showPage('accueil', 'competences-section')">Compétences</a></li>
+      <li><a onclick="showPage('accueil', 'contact-section')">Contact</a></li>
     </ul>
   </nav>
 
-  <section id="hero">
-    <div class="hero-content">
-      <div class="hero-tag">Portfolio · 2025</div>
-      <h1>HENRY<br><span class="accent">THOMAS</span><br></h1>
-      <p class="hero-sub">
-        Etudian de geii<br>
-        j'ai diférentes passion comme lire, codé.<br>
-        j'ai choisi cette formation pour aprendre a...
-      </p>
-      <div class="btn-group">
-        <a class="btn btn-primary" href="#projets">Voir les projets</a>
-        <a class="btn btn-outline" href="#contact">Me contacter</a>
+  <!-- ==================== PAGE ACCUEIL ==================== -->
+  <div id="page-accueil" class="page active">
+
+    <section id="hero">
+      <div class="hero-content">
+        <div class="hero-tag">Portfolio · 2025</div>
+        <h1>HENRY<br><span class="accent">THOMAS</span></h1>
+        <p class="hero-sub">
+          Etudiant en GEII<br>
+          j'ai différentes passions comme lire, coder.<br>
+          j'ai choisi cette formation pour apprendre à...
+        </p>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="showPage('accueil', 'projets-section')">Voir les projets</button>
+          <button class="btn btn-outline" onclick="showPage('accueil', 'contact-section')">Me contacter</button>
+        </div>
+      </div>
+      <div class="hero-deco">
+        <div class="deco-line"></div>
+        <div class="deco-diamond"></div>
+        <div class="deco-line"></div>
+      </div>
+    </section>
+
+    <div class="stats-bar">
+      <div class="stat"><div class="stat-num">12+</div><div class="stat-label">Projets</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">Années d'exp.</div></div>
+      <div class="stat"><div class="stat-num">8</div><div class="stat-label">Technologies</div></div>
+    </div>
+
+    <section id="projets-section">
+      <div class="section-title">// Réalisations</div>
+      <h2>Mes Projets</h2>
+      <div class="projects-grid">
+
+        <div class="card" onclick="showPage('projet-thermometre')">
+          <div class="card-corner"></div>
+          <div class="card-tag">Électronique</div>
+          <h3>Thermomètre de bain</h3>
+          <p>Construction d'un thermomètre de bain pour bébé, en respectant les exigences du cahier des charges.</p>
+          <div class="card-cta">Voir le projet</div>
+        </div>
+
+        <div class="card" onclick="showPage('projet-kart')">
+          <div class="card-corner"></div>
+          <div class="card-tag">Mécatronique</div>
+          <h3>Kart électrique</h3>
+          <p>Réalisation d'un kart électrique avec sa télécommande, en respectant les exigences du cahier des charges.</p>
+          <div class="card-cta">Voir le projet</div>
+        </div>
+
+        <div class="card" onclick="showPage('projet-autonome')">
+          <div class="card-corner"></div>
+          <div class="card-tag">Robotique</div>
+          <h3>Projet Autonome</h3>
+          <p>Description de votre projet. Technologies utilisées, objectif, résultat.</p>
+          <div class="card-cta">Voir le projet</div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="competences-section">
+      <div class="section-title">// Compétences</div>
+      <h2>Mes Compétences</h2>
+      <div class="skills-list">
+        <div class="skill-item">
+          <div class="skill-header"><span>À remplacer</span><span class="skill-pct">90%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span>À remplacer</span><span class="skill-pct">80%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span>À remplacer</span><span class="skill-pct">70%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span>À remplacer</span><span class="skill-pct">65%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span>À remplacer</span><span class="skill-pct">85%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact-section">
+      <div class="section-title">// Prise de contact</div>
+      <h2>Me Contacter</h2>
+      <div class="contact-inner">
+        <div class="contact-info">
+          <p>Disponible pour des projets freelance,<br>des collaborations ou simplement discuter.</p>
+          <div class="contact-links">
+            <a class="contact-link" href="https://github.com/will123t" target="_blank">
+              <span></span>github.com/Will
+            </a>
+            <a class="contact-link" href="mailto:thomas.henry.geii@gmail.com">
+              <span></span>thomas.henry.geii@gmail.com
+            </a>
+            <a class="contact-link" href="https://linkedin.com/in/votre-profil" target="_blank">
+              <span></span>LinkedIn
+            </a>
+          </div>
+        </div>
+        <div class="contact-form">
+          <div class="form-group">
+            <label>Nom</label>
+            <input type="text" placeholder="votre nom"/>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="votre adress imail"/>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea rows="4" placeholder="Votre message..."></textarea>
+          </div>
+          <button class="btn btn-primary" type="button">Envoyer le message</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2025 — Thomas Henry · Tous droits réservés</p>
+      <div class="rog-logo">PORTFOLIO</div>
+    </footer>
+
+  </div><!-- /page-accueil -->
+
+
+  <!-- ==================== PAGE THERMOMÈTRE ==================== -->
+  <div id="page-projet-thermometre" class="page">
+    <div class="projet-page">
+      <div class="projet-hero">
+        <button class="back-btn" onclick="showPage('accueil', 'projets-section')">Retour aux projets</button>
+        <div class="projet-tag">// Électronique · 2024</div>
+        <div class="projet-titre">THERMO<span class="accent">MÈTRE</span><br>DE BAIN</div>
+        <p class="projet-description">
+          Construction d'un thermomètre de bain pour bébé, conçu et réalisé en suivant 
+          rigoureusement les exigences du cahier des charges. Projet alliant électronique 
+          embarquée et contraintes de sécurité.
+        </p>
+        <div class="projet-meta">
+          <div class="meta-item">
+            <div class="meta-label">Statut</div>
+            <div class="meta-value">Terminé</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Durée</div>
+            <div class="meta-value">À compléter</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Type</div>
+            <div class="meta-value">Électronique</div>
+          </div>
+        </div>
+      </div>
+      <div class="projet-body">
+        <div>
+          <div class="projet-section-title">// Objectif</div>
+          <div class="projet-section-h">Description du projet</div>
+          <p class="projet-text">
+            Le but de ce projet est de construire un thermomètre de bain pour bébé. 
+            Décrivez ici les détails du projet : contexte, problème à résoudre, 
+            contraintes techniques, approche choisie...
+          </p>
+        </div>
+        <div>
+          <div class="projet-section-title">// Stack technique</div>
+          <div class="projet-section-h">Technologies utilisées</div>
+          <div class="tech-list">
+            <span class="tech-badge">À compléter</span>
+            <span class="tech-badge">À compléter</span>
+            <span class="tech-badge">À compléter</span>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="hero-deco">
-      <div class="deco-line"></div>
-      <div class="deco-diamond"></div>
-      <div class="deco-line"></div>
-    </div>
-  </section>
-
-  <div class="stats-bar">
-    <div class="stat"><div class="stat-num">12+</div><div class="stat-label">Projets</div></div>
-    <div class="stat"><div class="stat-num">3</div><div class="stat-label">Années d'exp.</div></div>
-    <div class="stat"><div class="stat-num">8</div><div class="stat-label">Technologies</div></div>
+    <footer>
+      <p>© 2025 — Thomas Henry · Tous droits réservés</p>
+      <div class="rog-logo">PORTFOLIO</div>
+    </footer>
   </div>
 
-  <section id="projets">
-    <div class="section-title">// Réalisations</div>
-    <h2>Mes Projets</h2>
-    <div class="projects-grid">
-      <div class="card">
-        <div class="card-corner"></div>
-        <div class="card-tag">Web App</div>
-        <h3>Projet Termometre de bain</h3>
-        <p>Le but de ce projet et de construir un termometre de bains pour bébé, en nous référent au exigence du cayer des charges.</p>
+
+  <!-- ==================== PAGE KART ==================== -->
+  <div id="page-projet-kart" class="page">
+    <div class="projet-page">
+      <div class="projet-hero">
+        <button class="back-btn" onclick="showPage('accueil', 'projets-section')">Retour aux projets</button>
+        <div class="projet-tag">// Mécatronique · 2024</div>
+        <div class="projet-titre">KART<br><span class="accent">ÉLECTRIQUE</span></div>
+        <p class="projet-description">
+          Réalisation d'un kart électrique avec sa télécommande, en respectant 
+          les exigences du cahier des charges. Projet mêlant électronique de puissance, 
+          programmation et conception mécanique.
+        </p>
+        <div class="projet-meta">
+          <div class="meta-item">
+            <div class="meta-label">Statut</div>
+            <div class="meta-value">Terminé</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Durée</div>
+            <div class="meta-value">À compléter</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Type</div>
+            <div class="meta-value">Mécatronique</div>
+          </div>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-corner"></div>
-        <div class="card-tag">UI / UX</div>
-        <h3>Projet khart</h3>
-        <p>Le but de ce projet et de réaliser un khart electrique avec sa telecomende, en nous référent au exigence du cayer des charges.</p>
-      </div>
-      <div class="card">
-        <div class="card-corner"></div>
-        <div class="card-tag">Backend</div>
-        <h3>Projet Olonome</h3>
-        <p>Description de votre projet. Technologies utilisées, objectif, résultat.</p>
+      <div class="projet-body">
+        <div>
+          <div class="projet-section-title">// Objectif</div>
+          <div class="projet-section-h">Description du projet</div>
+          <p class="projet-text">
+            Le but de ce projet est de réaliser un kart électrique avec sa télécommande. 
+            Décrivez ici les détails du projet : motorisation, système de contrôle, 
+            protocole de communication, contraintes de sécurité...
+          </p>
+        </div>
+        <div>
+          <div class="projet-section-title">// Stack technique</div>
+          <div class="projet-section-h">Technologies utilisées</div>
+          <div class="tech-list">
+            <span class="tech-badge">À compléter</span>
+            <span class="tech-badge">À compléter</span>
+            <span class="tech-badge">À compléter</span>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+    <footer>
+      <p>© 2025 — Thomas Henry · Tous droits réservés</p>
+      <div class="rog-logo">PORTFOLIO</div>
+    </footer>
+  </div>
 
-  <section id="competences">
-    <div class="section-title">// Compétences</div>
-    <h2>Mes competences</h2>
-    <div class="skills-list">
-      <div class="skill-item">
-        <div class="skill-header"><span>a remplacer</span><span class="skill-pct">90%</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+
+  <!-- ==================== PAGE AUTONOME ==================== -->
+  <div id="page-projet-autonome" class="page">
+    <div class="projet-page">
+      <div class="projet-hero">
+        <button class="back-btn" onclick="showPage('accueil', 'projets-section')">Retour aux projets</button>
+        <div class="projet-tag">// Robotique · 2024</div>
+        <div class="projet-titre">PROJET<br><span class="accent">AUTONOME</span></div>
+        <p class="projet-description">
+          Description de votre projet. Présentez ici le contexte, les enjeux 
+          et les objectifs de ce projet.
+        </p>
+        <div class="projet-meta">
+          <div class="meta-item">
+            <div class="meta-label">Statut</div>
+            <div class="meta-value">À compléter</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Durée</div>
+            <div class="meta-value">À compléter</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Type</div>
+            <div class="meta-value">Robotique</div>
+          </div>
+        </div>
       </div>
-      <div class="skill-item">
-        <div class="skill-header"><span>a remplacer</span><span class="skill-pct">80%</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-header"><span>a remplacer</span><span class="skill-pct">70%</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-header"><span>a remplacer</span><span class="skill-pct">65%</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-header"><span>a remplacer</span><span class="skill-pct">85%</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+      <div class="projet-body">
+        <div>
+          <div class="projet-section-title">// Objectif</div>
+          <div class="projet-section-h">Description du projet</div>
+          <p class="projet-text">
+            Décrivez ici les détails du projet : contexte, problème à résoudre, 
+            contraintes techniques, approche choisie, résultats obtenus...
+          </p>
+        </div>
+        <div>
+          <div class="projet-section-title">// Stack technique</div>
+          <div class="projet-section-h">Technologies utilisées</div>
+          <div class="tech-list">
+            <span class="tech-badge">À compléter</span>
+            <span class="tech-badge">À compléter</span>
+            <span class="tech-badge">À compléter</span>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+    <footer>
+      <p>© 2025 — Thomas Henry · Tous droits réservés</p>
+      <div class="rog-logo">PORTFOLIO</div>
+    </footer>
+  </div>
 
-  <section id="contact">
-    <div class="section-title">// Prise de contact</div>
-    <h2>Me Contacter</h2>
-    <div class="contact-inner">
-      <div class="contact-info">
-        <p>Disponible pour des projets freelance,<br>des collaborations ou simplement discuter.</p>
-        <div class="contact-links">
-          <a class="contact-link" href="https://github.com/will123t" target="_blank">
-            <span></span>github.com/Will
-          </a>
-          <a class="contact-link" href="mailto:thomas.henry.geii@gmail.com">
-            <span></span>thomas.henry.geii@gmail.com
-          </a>
-          <a class="contact-link" href="https://linkedin.com/in/votre-profil" target="_blank">
-            <span></span>LinkedIn
-          </a>
-        </div>
-      </div>
-      <div class="contact-form">
-        <div class="form-group">
-          <label>Nom</label>
-          <input type="text" placeholder="votre nom"/>
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" placeholder="Votre message...votre adress imail"/>
-        </div>
-        <div class="form-group">
-          <label>Message</label>
-          <textarea rows="4" placeholder="Votre message..."></textarea>
-        </div>
-        <button class="btn btn-primary" type="button">Envoyer le message</button>
-      </div>
-    </div>
-  </section>
 
-  <footer>
-    <p>© 2025 — Thomas Henry · Tous droits réservés</p>
-    <div class="rog-logo">PORTFOLIO</div>
-  </footer>
+  <script>
+    function showPage(pageId, scrollTo) {
+      // Masquer toutes les pages
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      // Afficher la page cible
+      const target = document.getElementById('page-' + pageId);
+      if (target) {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        // Si on veut scroller vers une section précise
+        if (scrollTo) {
+          setTimeout(() => {
+            const el = document.getElementById(scrollTo);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }, 50);
+        }
+      }
+    }
+  </script>
 
 </body>
 </html>
