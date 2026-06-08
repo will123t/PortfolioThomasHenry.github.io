@@ -7,40 +7,68 @@
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --rouge:     #cc0000;
-      --rouge-vif: #ff0000;
-      --rouge-glow:#ff000044;
-      --noir:      #0a0a0a;
-      --noir-2:    #111111;
-      --noir-3:    #1a1a1a;
-      --gris:      #2a2a2a;
-      --gris-clair:#888888;
-      --blanc:     #f0f0f0;
-      --metal:     #c0c0c0;
+      --rouge:      #cc0000;
+      --rouge-vif:  #e60000;
+      --rouge-glow: #cc000033;
     }
-
+    [data-theme="dark"] {
+      --bg:         #0a0a0a;
+      --bg-2:       #111111;
+      --bg-3:       #1a1a1a;
+      --border:     #2a2a2a;
+      --text:       #f0f0f0;
+      --text-muted: #888888;
+      --nav-bg:     rgba(10,10,10,0.95);
+      --grid-line:  #cc000010;
+      --card-bg:    #1a1a1a;
+      --card-hover-shadow: rgba(204,0,0,0.2);
+      --hero-right: #1a0000;
+      --stat-bg:    rgba(17,17,17,0.9);
+      --input-bg:   #1a1a1a;
+      --footer-bg:  #0a0a0a;
+      --toggle-bg:  #2a2a2a;
+      --toggle-icon:#f0f0f0;
+      --scanline:   rgba(0,0,0,0.04);
+    }
+    [data-theme="light"] {
+      --bg:         #ffffff;
+      --bg-2:       #f7f7f7;
+      --bg-3:       #efefef;
+      --border:     #dddddd;
+      --text:       #111111;
+      --text-muted: #888888;
+      --nav-bg:     rgba(255,255,255,0.97);
+      --grid-line:  #cc000008;
+      --card-bg:    #ffffff;
+      --card-hover-shadow: rgba(204,0,0,0.12);
+      --hero-right: #fff0f0;
+      --stat-bg:    #f7f7f7;
+      --input-bg:   #ffffff;
+      --footer-bg:  #ffffff;
+      --toggle-bg:  #efefef;
+      --toggle-icon:#111111;
+      --scanline:   rgba(0,0,0,0.012);
+    }
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior: smooth; }
     body {
-      background: var(--noir);
-      color: var(--blanc);
+      background: var(--bg);
+      color: var(--text);
       font-family: 'Rajdhani', sans-serif;
       overflow-x: hidden;
       cursor: crosshair;
+      transition: background 0.3s, color 0.3s;
     }
-
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       background:
-        repeating-linear-gradient(0deg,   transparent, transparent 39px, #cc000010 40px),
-        repeating-linear-gradient(90deg,  transparent, transparent 39px, #cc000010 40px);
+        repeating-linear-gradient(0deg,   transparent, transparent 39px, var(--grid-line) 40px),
+        repeating-linear-gradient(90deg,  transparent, transparent 39px, var(--grid-line) 40px);
       pointer-events: none;
       z-index: 0;
     }
-
-    /* NAV */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -50,21 +78,21 @@
       justify-content: space-between;
       padding: 0 3rem;
       height: 64px;
-      background: rgba(10,10,10,0.95);
+      background: var(--nav-bg);
       border-bottom: 1px solid var(--rouge);
       backdrop-filter: blur(8px);
     }
+    .nav-left { display: flex; align-items: center; gap: 1.5rem; }
     .nav-logo {
       font-family: 'Orbitron', monospace;
       font-weight: 900;
       font-size: 1.4rem;
       color: var(--rouge-vif);
       letter-spacing: 4px;
-      text-shadow: 0 0 16px var(--rouge-vif);
       text-decoration: none;
       cursor: pointer;
     }
-    .nav-logo span { color: var(--blanc); }
+    .nav-logo span { color: var(--text); }
     nav ul { list-style: none; display: flex; gap: 2.5rem; }
     nav ul a {
       font-family: 'Rajdhani', sans-serif;
@@ -72,7 +100,7 @@
       font-size: 0.95rem;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--gris-clair);
+      color: var(--text-muted);
       text-decoration: none;
       position: relative;
       transition: color 0.2s;
@@ -85,36 +113,58 @@
       width: 0; height: 1px;
       background: var(--rouge-vif);
       transition: width 0.3s;
-      box-shadow: 0 0 6px var(--rouge-vif);
     }
-    nav ul a:hover { color: var(--blanc); }
+    nav ul a:hover { color: var(--text); }
     nav ul a:hover::after { width: 100%; }
-
-    /* PAGES */
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--toggle-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover { border-color: var(--rouge); }
+    .theme-toggle-btn {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all 0.25s;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-muted);
+    }
+    .theme-toggle-btn.active {
+      background: var(--rouge);
+      color: #fff;
+      box-shadow: 0 0 10px var(--rouge-glow);
+    }
     .page { display: none; }
     .page.active { display: block; }
-
-    /* PAGE TRANSITION */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
     }
     .page.active { animation: fadeIn 0.35s ease-out; }
-
-    /* SCANLINES */
     .scanlines {
       position: fixed;
       inset: 0;
       background: repeating-linear-gradient(
         to bottom,
         transparent, transparent 2px,
-        rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px
+        var(--scanline) 2px, var(--scanline) 4px
       );
       pointer-events: none;
       z-index: 999;
     }
-
-    /* ===================== PAGE ACCUEIL ===================== */
     #hero {
       position: relative;
       min-height: 100vh;
@@ -122,6 +172,7 @@
       align-items: center;
       padding: 0 8rem;
       overflow: hidden;
+      background: var(--bg);
     }
     #hero::after {
       content: '';
@@ -129,15 +180,11 @@
       top: 0; right: 0;
       width: 42%;
       height: 100%;
-      background: linear-gradient(135deg, transparent 40%, #1a0000 100%);
+      background: linear-gradient(135deg, transparent 40%, var(--hero-right) 100%);
       border-left: 2px solid var(--rouge);
       clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
     }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 640px;
-    }
+    .hero-content { position: relative; z-index: 2; max-width: 640px; }
     .hero-tag {
       font-family: 'Share Tech Mono', monospace;
       font-size: 0.8rem;
@@ -153,7 +200,6 @@
       display: inline-block;
       width: 24px; height: 2px;
       background: var(--rouge-vif);
-      box-shadow: 0 0 6px var(--rouge-vif);
     }
     h1 {
       font-family: 'Orbitron', monospace;
@@ -163,15 +209,13 @@
       text-transform: uppercase;
       letter-spacing: -1px;
       margin-bottom: 0.4rem;
+      color: var(--text);
     }
-    h1 .accent {
-      color: var(--rouge-vif);
-      text-shadow: 0 0 30px var(--rouge-vif), 0 0 60px var(--rouge-glow);
-    }
+    h1 .accent { color: var(--rouge-vif); text-shadow: 0 0 30px var(--rouge-glow); }
     .hero-sub {
       font-family: 'Share Tech Mono', monospace;
       font-size: 1rem;
-      color: var(--gris-clair);
+      color: var(--text-muted);
       margin: 1.5rem 0 2.5rem;
       line-height: 1.7;
       border-left: 2px solid var(--rouge);
@@ -191,458 +235,147 @@
       transition: all 0.25s;
       clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
     }
-    .btn-primary {
-      background: var(--rouge);
-      color: var(--blanc);
-      box-shadow: 0 0 20px var(--rouge-glow);
-    }
-    .btn-primary:hover {
-      background: var(--rouge-vif);
-      box-shadow: 0 0 40px var(--rouge-vif), 0 0 80px var(--rouge-glow);
-      transform: translateY(-2px);
-    }
-    .btn-outline {
-      background: transparent;
-      color: var(--blanc);
-      border: 1px solid var(--rouge);
-    }
-    .btn-outline:hover {
-      background: rgba(204,0,0,0.15);
-      box-shadow: 0 0 20px var(--rouge-glow);
-      transform: translateY(-2px);
-    }
+    .btn-primary { background: var(--rouge); color: #fff; box-shadow: 0 4px 20px var(--rouge-glow); }
+    .btn-primary:hover { background: var(--rouge-vif); transform: translateY(-2px); box-shadow: 0 6px 30px rgba(204,0,0,0.35); }
+    .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--rouge); }
+    .btn-outline:hover { background: rgba(204,0,0,0.07); transform: translateY(-2px); }
     .hero-deco {
-      position: absolute;
-      right: 4%;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 3;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4rem;
-      opacity: 0.7;
+      position: absolute; right: 4%; top: 50%; transform: translateY(-50%);
+      z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 0.4rem; opacity: 0.6;
     }
-    .deco-line {
-      width: 2px;
-      height: 80px;
-      background: linear-gradient(to bottom, transparent, var(--rouge), transparent);
-    }
-    .deco-diamond {
-      width: 12px; height: 12px;
-      background: var(--rouge-vif);
-      transform: rotate(45deg);
-      box-shadow: 0 0 16px var(--rouge-vif);
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; box-shadow: 0 0 16px var(--rouge-vif); }
-      50%       { opacity: 0.5; box-shadow: 0 0 4px var(--rouge-vif); }
-    }
-
-    /* STATS */
+    .deco-line { width: 2px; height: 80px; background: linear-gradient(to bottom, transparent, var(--rouge), transparent); }
+    .deco-diamond { width: 12px; height: 12px; background: var(--rouge-vif); transform: rotate(45deg); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
     .stats-bar {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border-top: 1px solid var(--gris);
-      border-bottom: 1px solid var(--gris);
-      background: rgba(17,17,17,0.9);
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: repeat(3,1fr);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      background: var(--stat-bg);
     }
-    .stat {
-      padding: 2rem;
-      text-align: center;
-      border-right: 1px solid var(--gris);
-      transition: background 0.3s;
-    }
+    .stat { padding: 2rem; text-align: center; border-right: 1px solid var(--border); transition: background 0.3s; }
     .stat:last-child { border-right: none; }
-    .stat:hover { background: rgba(204,0,0,0.06); }
-    .stat-num {
-      font-family: 'Orbitron', monospace;
-      font-size: 2.2rem;
-      font-weight: 900;
-      color: var(--rouge-vif);
-      text-shadow: 0 0 20px var(--rouge-glow);
-    }
-    .stat-label {
-      font-size: 0.75rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--gris-clair);
-      margin-top: 0.3rem;
-    }
-
-    /* SECTIONS */
-    section {
-      position: relative;
-      z-index: 1;
-      padding: 6rem 8rem;
-    }
-    .section-title {
-      font-family: 'Orbitron', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 5px;
-      color: var(--rouge-vif);
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
-    }
+    .stat:hover { background: rgba(204,0,0,0.04); }
+    .stat-num { font-family:'Orbitron',monospace; font-size:2.2rem; font-weight:900; color:var(--rouge-vif); }
+    .stat-label { font-size:0.75rem; letter-spacing:3px; text-transform:uppercase; color:var(--text-muted); margin-top:0.3rem; }
+    section { position: relative; z-index: 1; padding: 6rem 8rem; }
+    .section-title { font-family:'Orbitron',monospace; font-size:0.7rem; letter-spacing:5px; color:var(--rouge-vif); text-transform:uppercase; margin-bottom:0.6rem; }
     h2 {
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(1.6rem, 3.5vw, 2.6rem);
-      font-weight: 900;
-      text-transform: uppercase;
-      margin-bottom: 3rem;
-      position: relative;
-      display: inline-block;
+      font-family:'Orbitron',monospace; font-size:clamp(1.6rem,3.5vw,2.6rem); font-weight:900;
+      text-transform:uppercase; color:var(--text); margin-bottom:3rem;
+      position:relative; display:inline-block;
     }
-    h2::after {
-      content: '';
-      position: absolute;
-      bottom: -8px; left: 0;
-      width: 60px; height: 2px;
-      background: var(--rouge-vif);
-      box-shadow: 0 0 8px var(--rouge-vif);
-    }
-
-    /* PROJETS GRID */
-    #projets-section { background: var(--noir-2); }
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5px;
-    }
+    h2::after { content:''; position:absolute; bottom:-8px; left:0; width:60px; height:2px; background:var(--rouge-vif); }
+    #projets-section { background: var(--bg-2); }
+    .projects-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1px; }
     .card {
-      background: var(--noir-3);
-      padding: 2rem;
-      border: 1px solid var(--gris);
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s;
+      background: var(--card-bg); padding: 2rem;
+      border: 1px solid var(--border); position: relative; overflow: hidden;
+      transition: all 0.3s; cursor: pointer;
       clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
+      display: flex; flex-direction: column; gap: 0.8rem;
     }
     .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(204,0,0,0.05), transparent);
+      content:''; position:absolute; top:0; left:-100%;
+      width:100%; height:100%;
+      background: linear-gradient(90deg, transparent, rgba(204,0,0,0.04), transparent);
       transition: left 0.5s;
     }
     .card:hover::before { left: 100%; }
-    .card:hover {
-      border-color: var(--rouge);
-      box-shadow: 0 0 20px rgba(204,0,0,0.2), inset 0 0 20px rgba(204,0,0,0.05);
-      transform: translateY(-4px);
-    }
-    .card-tag {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--rouge-vif);
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-    .card h3 {
-      font-family: 'Orbitron', monospace;
-      font-size: 1.1rem;
-      font-weight: 700;
-    }
-    .card p { font-size: 0.9rem; color: var(--gris-clair); line-height: 1.6; flex: 1; }
-    .card-corner {
-      position: absolute;
-      top: 0; right: 0;
-      width: 18px; height: 18px;
-      border-bottom: 18px solid var(--rouge);
-      border-left: 18px solid transparent;
-    }
-    .card-cta {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--rouge-vif);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
-      transition: gap 0.2s;
-    }
+    .card:hover { border-color: var(--rouge); box-shadow: 0 8px 32px var(--card-hover-shadow); transform: translateY(-4px); }
+    .card-tag { font-family:'Share Tech Mono',monospace; font-size:0.7rem; color:var(--rouge-vif); letter-spacing:3px; text-transform:uppercase; }
+    .card h3 { font-family:'Orbitron',monospace; font-size:1.1rem; font-weight:700; color:var(--text); }
+    .card p { font-size:0.9rem; color:var(--text-muted); line-height:1.6; flex:1; }
+    .card-corner { position:absolute; top:0; right:0; width:18px; height:18px; border-bottom:18px solid var(--rouge); border-left:18px solid transparent; }
+    .card-cta { font-family:'Share Tech Mono',monospace; font-size:0.72rem; color:var(--rouge-vif); letter-spacing:2px; text-transform:uppercase; display:flex; align-items:center; gap:0.4rem; margin-top:0.4rem; transition:gap 0.2s; }
     .card:hover .card-cta { gap: 0.8rem; }
     .card-cta::after { content: '→'; }
-
-    /* COMPÉTENCES */
-    #competences-section { background: var(--noir); }
-    .skills-list { display: flex; flex-direction: column; gap: 1.2rem; max-width: 600px; }
-    .skill-item { display: flex; flex-direction: column; gap: 0.4rem; }
-    .skill-header {
-      display: flex;
-      justify-content: space-between;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.8rem;
-      letter-spacing: 2px;
-      color: var(--metal);
-    }
+    #competences-section { background: var(--bg); }
+    .skills-list { display:flex; flex-direction:column; gap:1.2rem; max-width:600px; }
+    .skill-item { display:flex; flex-direction:column; gap:0.4rem; }
+    .skill-header { display:flex; justify-content:space-between; font-family:'Share Tech Mono',monospace; font-size:0.8rem; letter-spacing:2px; color:var(--text-muted); }
     .skill-pct { color: var(--rouge-vif); }
-    .skill-bar { height: 4px; background: var(--gris); }
-    .skill-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--rouge), var(--rouge-vif));
-      box-shadow: 0 0 8px var(--rouge-vif);
-      animation: grow 1.4s ease-out forwards;
-      transform-origin: left;
-      transform: scaleX(0);
-    }
+    .skill-bar { height:4px; background:var(--border); }
+    .skill-fill { height:100%; background:linear-gradient(90deg,var(--rouge),var(--rouge-vif)); animation:grow 1.4s ease-out forwards; transform-origin:left; transform:scaleX(0); }
     @keyframes grow { to { transform: scaleX(1); } }
-
-    /* CONTACT */
-    #contact-section { background: var(--noir-2); border-top: 1px solid var(--gris); }
-    .contact-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: start;
-    }
-    .contact-info p { color: var(--gris-clair); line-height: 1.8; margin-bottom: 2rem; }
-    .contact-links { display: flex; flex-direction: column; gap: 0.8rem; }
-    .contact-link {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      color: var(--gris-clair);
-      text-decoration: none;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.85rem;
-      transition: color 0.2s;
-    }
+    #contact-section { background: var(--bg-2); border-top: 1px solid var(--border); }
+    .contact-inner { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
+    .contact-info p { color:var(--text-muted); line-height:1.8; margin-bottom:2rem; }
+    .contact-links { display:flex; flex-direction:column; gap:0.8rem; }
+    .contact-link { display:flex; align-items:center; gap:0.8rem; color:var(--text-muted); text-decoration:none; font-family:'Share Tech Mono',monospace; font-size:0.85rem; transition:color 0.2s; }
     .contact-link:hover { color: var(--rouge-vif); }
-    .contact-link span {
-      width: 6px; height: 6px;
-      background: var(--rouge);
-      display: inline-block;
-      transform: rotate(45deg);
-      flex-shrink: 0;
+    .contact-link span { width:6px; height:6px; background:var(--rouge); display:inline-block; transform:rotate(45deg); flex-shrink:0; }
+    .contact-form { display:flex; flex-direction:column; gap:1rem; }
+    .form-group { display:flex; flex-direction:column; gap:0.4rem; }
+    .form-group label { font-family:'Share Tech Mono',monospace; font-size:0.7rem; letter-spacing:3px; text-transform:uppercase; color:var(--rouge-vif); }
+    .form-group input, .form-group textarea {
+      background: var(--input-bg); border: 1px solid var(--border);
+      color: var(--text); font-family:'Rajdhani',sans-serif; font-size:1rem;
+      padding: 0.75rem 1rem; outline: none; transition: border-color 0.2s, box-shadow 0.2s; resize: none;
     }
-    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-    .form-group label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--rouge-vif);
-    }
-    .form-group input,
-    .form-group textarea {
-      background: var(--noir-3);
-      border: 1px solid var(--gris);
-      color: var(--blanc);
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 1rem;
-      padding: 0.75rem 1rem;
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      resize: none;
-    }
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: var(--rouge);
-      box-shadow: 0 0 12px var(--rouge-glow);
-    }
-
-    /* ===================== PAGES PROJET ===================== */
-    .projet-page {
-      min-height: 100vh;
-      padding-top: 64px;
-    }
-    .projet-hero {
-      position: relative;
-      padding: 5rem 8rem 4rem;
-      background: var(--noir-2);
-      border-bottom: 1px solid var(--rouge);
-      overflow: hidden;
-    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--rouge); box-shadow: 0 0 12px var(--rouge-glow); }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-muted); opacity: 0.6; }
+    .projet-page { min-height:100vh; padding-top:64px; }
+    .projet-hero { position:relative; padding:5rem 8rem 4rem; background:var(--bg-2); border-bottom:1px solid var(--rouge); overflow:hidden; }
     .projet-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        -45deg,
-        transparent, transparent 20px,
-        rgba(204,0,0,0.03) 20px, rgba(204,0,0,0.03) 21px
-      );
+      content:''; position:absolute; inset:0;
+      background:repeating-linear-gradient(-45deg,transparent,transparent 20px,rgba(204,0,0,0.02) 20px,rgba(204,0,0,0.02) 21px);
     }
-    .back-btn {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--gris-clair);
-      background: none;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-      transition: color 0.2s;
-      padding: 0;
-    }
+    .back-btn { font-family:'Share Tech Mono',monospace; font-size:0.75rem; letter-spacing:3px; text-transform:uppercase; color:var(--text-muted); background:none; border:none; cursor:pointer; display:flex; align-items:center; gap:0.5rem; margin-bottom:2rem; transition:color 0.2s; padding:0; }
     .back-btn:hover { color: var(--rouge-vif); }
-    .back-btn::before { content: '←'; font-size: 1rem; }
-    .projet-tag {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--rouge-vif);
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    .projet-titre {
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(2rem, 5vw, 3.8rem);
-      font-weight: 900;
-      text-transform: uppercase;
-      line-height: 1;
-      margin-bottom: 1.5rem;
-    }
-    .projet-titre .accent { color: var(--rouge-vif); text-shadow: 0 0 24px var(--rouge-vif); }
-    .projet-description {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.95rem;
-      color: var(--gris-clair);
-      line-height: 1.8;
-      max-width: 640px;
-      border-left: 2px solid var(--rouge);
-      padding-left: 1rem;
-    }
-    .projet-meta {
-      display: flex;
-      gap: 2rem;
-      margin-top: 2.5rem;
-      flex-wrap: wrap;
-    }
-    .meta-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-    .meta-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--rouge-vif);
-    }
-    .meta-value {
-      font-family: 'Orbitron', monospace;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--blanc);
-    }
-    .projet-body {
-      padding: 4rem 8rem;
-      background: var(--noir);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-    }
-    .projet-section-title {
-      font-family: 'Orbitron', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 5px;
-      color: var(--rouge-vif);
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    .projet-section-h {
-      font-family: 'Orbitron', monospace;
-      font-size: 1.2rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      margin-bottom: 1.2rem;
-      padding-bottom: 0.6rem;
-      border-bottom: 1px solid var(--gris);
-    }
-    .projet-text {
-      font-size: 0.95rem;
-      color: var(--gris-clair);
-      line-height: 1.8;
-    }
-    .tech-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 1rem;
-    }
-    .tech-badge {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 0.4rem 0.9rem;
-      border: 1px solid var(--rouge);
-      color: var(--rouge-vif);
-      background: rgba(204,0,0,0.08);
-      clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%);
-    }
-
-    /* FOOTER */
-    footer {
-      position: relative;
-      z-index: 2;
-      background: var(--noir);
-      border-top: 1px solid var(--rouge);
-      padding: 1.5rem 8rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    footer p {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--gris-clair);
-      letter-spacing: 2px;
-    }
-    footer .rog-logo {
-      font-family: 'Orbitron', monospace;
-      font-size: 0.8rem;
-      color: var(--rouge-vif);
-      letter-spacing: 4px;
-      text-shadow: 0 0 8px var(--rouge-vif);
-    }
-
-    /* RESPONSIVE */
+    .back-btn::before { content:'←'; font-size:1rem; }
+    .projet-tag { font-family:'Share Tech Mono',monospace; font-size:0.72rem; color:var(--rouge-vif); letter-spacing:4px; text-transform:uppercase; margin-bottom:1rem; }
+    .projet-titre { font-family:'Orbitron',monospace; font-size:clamp(2rem,5vw,3.8rem); font-weight:900; text-transform:uppercase; line-height:1; color:var(--text); margin-bottom:1.5rem; }
+    .projet-titre .accent { color: var(--rouge-vif); }
+    .projet-description { font-family:'Share Tech Mono',monospace; font-size:0.95rem; color:var(--text-muted); line-height:1.8; max-width:640px; border-left:2px solid var(--rouge); padding-left:1rem; }
+    .projet-meta { display:flex; gap:2rem; margin-top:2.5rem; flex-wrap:wrap; }
+    .meta-item { display:flex; flex-direction:column; gap:0.3rem; }
+    .meta-label { font-family:'Share Tech Mono',monospace; font-size:0.65rem; letter-spacing:3px; text-transform:uppercase; color:var(--rouge-vif); }
+    .meta-value { font-family:'Orbitron',monospace; font-size:0.85rem; font-weight:700; color:var(--text); }
+    .projet-body { padding:4rem 8rem; background:var(--bg); display:grid; grid-template-columns:1fr 1fr; gap:4rem; }
+    .projet-section-title { font-family:'Orbitron',monospace; font-size:0.65rem; letter-spacing:5px; color:var(--rouge-vif); text-transform:uppercase; margin-bottom:1rem; }
+    .projet-section-h { font-family:'Orbitron',monospace; font-size:1.2rem; font-weight:700; text-transform:uppercase; color:var(--text); margin-bottom:1.2rem; padding-bottom:0.6rem; border-bottom:1px solid var(--border); }
+    .projet-text { font-size:0.95rem; color:var(--text-muted); line-height:1.8; }
+    .tech-list { display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:1rem; }
+    .tech-badge { font-family:'Share Tech Mono',monospace; font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; padding:0.4rem 0.9rem; border:1px solid var(--rouge); color:var(--rouge-vif); background:rgba(204,0,0,0.06); clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,0 100%); }
+    footer { position:relative; z-index:2; background:var(--footer-bg); border-top:1px solid var(--border); padding:1.5rem 8rem; display:flex; justify-content:space-between; align-items:center; }
+    footer p { font-family:'Share Tech Mono',monospace; font-size:0.72rem; color:var(--text-muted); letter-spacing:2px; }
+    footer .rog-logo { font-family:'Orbitron',monospace; font-size:0.8rem; color:var(--rouge-vif); letter-spacing:4px; }
     @media (max-width: 900px) {
-      section, nav, footer, .projet-hero, .projet-body { padding-left: 2rem; padding-right: 2rem; }
-      #hero { padding: 6rem 2rem 4rem; }
-      .stats-bar { grid-template-columns: 1fr 1fr; }
-      .contact-inner, .projet-body { grid-template-columns: 1fr; }
-      .hero-deco { display: none; }
-      #hero::after { display: none; }
+      section, nav, footer, .projet-hero, .projet-body { padding-left:2rem; padding-right:2rem; }
+      #hero { padding:6rem 2rem 4rem; }
+      .stats-bar { grid-template-columns:1fr 1fr; }
+      .contact-inner, .projet-body { grid-template-columns:1fr; }
+      .hero-deco { display:none; }
+      #hero::after { display:none; }
+      nav ul { gap: 1.2rem; }
+      nav { padding: 0 1rem; }
+      .projet-hero-inner { flex-direction: column !important; }
+      .projet-hero-inner img { width: 160px !important; margin: 0 auto; }
     }
   </style>
 </head>
-<body>
+<body data-theme="dark">
 
   <div class="scanlines"></div>
 
   <nav>
-    <span class="nav-logo" onclick="showPage('accueil')">PORT<span>FOLIO</span></span>
+    <div class="nav-left">
+      <span class="nav-logo" onclick="showPage('accueil')">PORT<span>FOLIO</span></span>
+    </div>
     <ul>
       <li><a onclick="showPage('accueil')">Accueil</a></li>
       <li><a onclick="showPage('accueil', 'projets-section')">Projets</a></li>
       <li><a onclick="showPage('accueil', 'competences-section')">Compétences</a></li>
       <li><a onclick="showPage('accueil', 'contact-section')">Contact</a></li>
     </ul>
+    <div class="theme-toggle" onclick="toggleTheme()" title="Changer de thème">
+      <button class="theme-toggle-btn active" id="btn-dark" title="Thème sombre">🌙</button>
+      <button class="theme-toggle-btn" id="btn-light" title="Thème clair">☀️</button>
+    </div>
   </nav>
 
-  <!-- ==================== PAGE ACCUEIL ==================== -->
+  <!-- PAGE ACCUEIL -->
   <div id="page-accueil" class="page active">
-
     <section id="hero">
       <div class="hero-content">
         <div class="hero-tag">Portfolio · 2025</div>
@@ -674,7 +407,6 @@
       <div class="section-title">// Réalisations</div>
       <h2>Mes Projets</h2>
       <div class="projects-grid">
-
         <div class="card" onclick="showPage('projet-thermometre')">
           <div class="card-corner"></div>
           <div class="card-tag">Électronique</div>
@@ -682,7 +414,6 @@
           <p>Construction d'un thermomètre de bain pour bébé, en respectant les exigences du cahier des charges.</p>
           <div class="card-cta">Voir le projet</div>
         </div>
-
         <div class="card" onclick="showPage('projet-kart')">
           <div class="card-corner"></div>
           <div class="card-tag">Mécatronique</div>
@@ -690,7 +421,6 @@
           <p>Réalisation d'un kart électrique avec sa télécommande, en respectant les exigences du cahier des charges.</p>
           <div class="card-cta">Voir le projet</div>
         </div>
-
         <div class="card" onclick="showPage('projet-autonome')">
           <div class="card-corner"></div>
           <div class="card-tag">Robotique</div>
@@ -698,7 +428,6 @@
           <p>Description de votre projet. Technologies utilisées, objectif, résultat.</p>
           <div class="card-cta">Voir le projet</div>
         </div>
-
       </div>
     </section>
 
@@ -736,32 +465,26 @@
         <div class="contact-info">
           <p>Disponible pour des projets freelance,<br>des collaborations ou simplement discuter.</p>
           <div class="contact-links">
-            <a class="contact-link" href="https://github.com/will123t" target="_blank">
-              <span></span>github.com/Will
-            </a>
-            <a class="contact-link" href="mailto:thomas.henry.geii@gmail.com">
-              <span></span>thomas.henry.geii@gmail.com
-            </a>
-            <a class="contact-link" href="https://linkedin.com/in/votre-profil" target="_blank">
-              <span></span>LinkedIn
-            </a>
+            <a class="contact-link" href="https://github.com/will123t" target="_blank"><span></span>github.com/Will</a>
+            <a class="contact-link" href="mailto:thomas.henry.geii@gmail.com"><span></span>thomas.henry.geii@gmail.com</a>
+            <a class="contact-link" href="https://linkedin.com/in/votre-profil" target="_blank"><span></span>LinkedIn</a>
           </div>
         </div>
-        <div class="contact-form">
+        <form class="contact-form" action="https://formspree.io/f/TON_ID_ICI" method="POST">
           <div class="form-group">
             <label>Nom</label>
-            <input type="text" placeholder="votre nom"/>
+            <input type="text" name="nom" placeholder="votre nom" required/>
           </div>
           <div class="form-group">
             <label>Email</label>
-            <input type="email" placeholder="votre adress imail"/>
+            <input type="email" name="email" placeholder="votre adresse email" required/>
           </div>
           <div class="form-group">
             <label>Message</label>
-            <textarea rows="4" placeholder="Votre message..."></textarea>
+            <textarea rows="4" name="message" placeholder="Votre message..." required></textarea>
           </div>
-          <button class="btn btn-primary" type="button">Envoyer le message</button>
-        </div>
+          <button class="btn btn-primary" type="submit">Envoyer le message</button>
+        </form>
       </div>
     </section>
 
@@ -769,34 +492,34 @@
       <p>© 2025 — Thomas Henry · Tous droits réservés</p>
       <div class="rog-logo">PORTFOLIO</div>
     </footer>
+  </div>
 
-  </div><!-- /page-accueil -->
-
-
-  <!-- ==================== PAGE THERMOMÈTRE ==================== -->
+  <!-- PAGE THERMOMÈTRE -->
   <div id="page-projet-thermometre" class="page">
     <div class="projet-page">
       <div class="projet-hero">
         <button class="back-btn" onclick="showPage('accueil', 'projets-section')">Retour aux projets</button>
-        <div class="projet-tag">// Électronique · 2024</div>
-        <div class="projet-titre">THERMO<span class="accent">MÈTRE</span><br>DE BAIN</div>
-        <p class="projet-description">
-          Construction d'un thermomètre de bain pour bébé, conçu et réalisé en suivant 
-          rigoureusement les exigences du cahier des charges. Projet alliant électronique 
-          embarquée et contraintes de sécurité.
-        </p>
-        <div class="projet-meta">
-          <div class="meta-item">
-            <div class="meta-label">Statut</div>
-            <div class="meta-value">Terminé</div>
+        <div class="projet-hero-inner" style="display:flex; align-items:center; justify-content:space-between; gap:3rem; flex-wrap:wrap;">
+          <div style="flex:1; min-width:280px;">
+            <div class="projet-tag">// Électronique · 2024</div>
+            <div class="projet-titre">THERMO<span class="accent">MÈTRE</span><br>DE BAIN</div>
+            <p class="projet-description">Construction d'un thermomètre de bain pour bébé, conçu et réalisé en suivant rigoureusement les exigences du cahier des charges.</p>
+            <div class="projet-meta">
+              <div class="meta-item"><div class="meta-label">Statut</div><div class="meta-value">Terminé</div></div>
+              <div class="meta-item"><div class="meta-label">Durée</div><div class="meta-value">40 heures</div></div>
+              <div class="meta-item"><div class="meta-label">Type</div><div class="meta-value">Électronique</div></div>
+              <div class="meta-item">
+                <div class="meta-label">Cahier des charges</div>
+                <a href="https://docs.google.com/document/d/1lyYfAgU4v1yBm1G-ZK_2Q2hxXNeRsF00/edit?usp=sharing&ouid=109633647887562039018&rtpof=true&sd=true" target="_blank" class="btn btn-outline" style="font-family:'Orbitron',monospace; font-size:0.85rem; font-weight:700; padding:0 0; background:none; border:none; color:var(--text); letter-spacing:0; clip-path:none; box-shadow:none; text-decoration:underline; text-underline-offset:3px; cursor:pointer; display:inline-block;">CDC</a>
+              </div>
+            </div>
           </div>
-          <div class="meta-item">
-            <div class="meta-label">Durée</div>
-            <div class="meta-value">À compléter</div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">Type</div>
-            <div class="meta-value">Électronique</div>
+          <div style="flex-shrink:0; position:relative; z-index:2;">
+            <img src="data:image/jpeg;base64,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hlmQoR/KvDNFsFhEsBUExuyH8DivfT94V4tdRf2d4q1a2KbQJi6/RuauLFIBYRn+AU5bGNT92rmcdOlDNtGa2MyPw3YR3XjKwhaNWRN0uMelevLhlz1rzj4eWxuPEV1ddVgi8vPuT0r0gDHSspPU1WwbR6UtFFZgFFFFADX6VR1LQ7LWI9l7bR3A/wBtcn860KKadhnB3fwg0iaTdBLPajrtVsimw/CHT42Be8uJB3HArvqKrmYrI5/S/A+jaO4eCzVpR0eUbjW+v5DtS0YxU3HYKKKKQgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAEauA+IXhae4u11iwiMs8Y2TQgcuo6EfSvQKaw796aHueHw61Eflfcjjhlbgj607+0mvZFt7KNrqZuFjUZ59/QV65d+HtN1Bi11YwTt1y0Yz+dTWOlWemrttbaK3H/TNAP1rTmI5TM8G+HG8P6T5czB7qY75XX19PwroaRRtGKWs3qV5BRRRSAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/9k="
+              alt="Thermomètre de bain tortue"
+              style="width:220px; height:auto; display:block; border:2px solid var(--rouge);
+                     clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);
+                     box-shadow:0 0 30px var(--rouge-glow);"/>
           </div>
         </div>
       </div>
@@ -804,11 +527,12 @@
         <div>
           <div class="projet-section-title">// Objectif</div>
           <div class="projet-section-h">Description du projet</div>
-          <p class="projet-text">
-            Le but de ce projet est de construire un thermomètre de bain pour bébé. 
-            Décrivez ici les détails du projet : contexte, problème à résoudre, 
-            contraintes techniques, approche choisie...
-          </p>
+          <p class="projet-text">Le but de ce projet est de construire un thermomètre de bain pour bébé. Pour cela nous avons procédé en plusieurs étapes :</p>
+          <br>
+          <p class="projet-text">1° Conception préliminaire</p>
+          <p class="projet-text">2° Conception détaillée</p>
+          <p class="projet-text">3° Fabrication prototype</p>
+          <p class="projet-text">4° Vérification des exigences</p>
         </div>
         <div>
           <div class="projet-section-title">// Stack technique</div>
@@ -821,49 +545,28 @@
         </div>
       </div>
     </div>
-    <footer>
-      <p>© 2025 — Thomas Henry · Tous droits réservés</p>
-      <div class="rog-logo">PORTFOLIO</div>
-    </footer>
+    <footer><p>© 2025 — Thomas Henry · Tous droits réservés</p><div class="rog-logo">PORTFOLIO</div></footer>
   </div>
 
-
-  <!-- ==================== PAGE KART ==================== -->
+  <!-- PAGE KART -->
   <div id="page-projet-kart" class="page">
     <div class="projet-page">
       <div class="projet-hero">
         <button class="back-btn" onclick="showPage('accueil', 'projets-section')">Retour aux projets</button>
         <div class="projet-tag">// Mécatronique · 2024</div>
         <div class="projet-titre">KART<br><span class="accent">ÉLECTRIQUE</span></div>
-        <p class="projet-description">
-          Réalisation d'un kart électrique avec sa télécommande, en respectant 
-          les exigences du cahier des charges. Projet mêlant électronique de puissance, 
-          programmation et conception mécanique.
-        </p>
+        <p class="projet-description">Réalisation d'un kart électrique avec sa télécommande, en respectant les exigences du cahier des charges.</p>
         <div class="projet-meta">
-          <div class="meta-item">
-            <div class="meta-label">Statut</div>
-            <div class="meta-value">Terminé</div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">Durée</div>
-            <div class="meta-value">À compléter</div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">Type</div>
-            <div class="meta-value">Mécatronique</div>
-          </div>
+          <div class="meta-item"><div class="meta-label">Statut</div><div class="meta-value">Terminé</div></div>
+          <div class="meta-item"><div class="meta-label">Durée</div><div class="meta-value">À compléter</div></div>
+          <div class="meta-item"><div class="meta-label">Type</div><div class="meta-value">Mécatronique</div></div>
         </div>
       </div>
       <div class="projet-body">
         <div>
           <div class="projet-section-title">// Objectif</div>
           <div class="projet-section-h">Description du projet</div>
-          <p class="projet-text">
-            Le but de ce projet est de réaliser un kart électrique avec sa télécommande. 
-            Décrivez ici les détails du projet : motorisation, système de contrôle, 
-            protocole de communication, contraintes de sécurité...
-          </p>
+          <p class="projet-text">Le but de ce projet est de réaliser un kart électrique avec sa télécommande. Décrivez ici les détails.</p>
         </div>
         <div>
           <div class="projet-section-title">// Stack technique</div>
@@ -876,47 +579,28 @@
         </div>
       </div>
     </div>
-    <footer>
-      <p>© 2025 — Thomas Henry · Tous droits réservés</p>
-      <div class="rog-logo">PORTFOLIO</div>
-    </footer>
+    <footer><p>© 2025 — Thomas Henry · Tous droits réservés</p><div class="rog-logo">PORTFOLIO</div></footer>
   </div>
 
-
-  <!-- ==================== PAGE AUTONOME ==================== -->
+  <!-- PAGE AUTONOME -->
   <div id="page-projet-autonome" class="page">
     <div class="projet-page">
       <div class="projet-hero">
         <button class="back-btn" onclick="showPage('accueil', 'projets-section')">Retour aux projets</button>
         <div class="projet-tag">// Robotique · 2024</div>
         <div class="projet-titre">PROJET<br><span class="accent">AUTONOME</span></div>
-        <p class="projet-description">
-          Description de votre projet. Présentez ici le contexte, les enjeux 
-          et les objectifs de ce projet.
-        </p>
+        <p class="projet-description">Description de votre projet. Présentez ici le contexte, les enjeux et les objectifs.</p>
         <div class="projet-meta">
-          <div class="meta-item">
-            <div class="meta-label">Statut</div>
-            <div class="meta-value">À compléter</div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">Durée</div>
-            <div class="meta-value">À compléter</div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">Type</div>
-            <div class="meta-value">Robotique</div>
-          </div>
+          <div class="meta-item"><div class="meta-label">Statut</div><div class="meta-value">À compléter</div></div>
+          <div class="meta-item"><div class="meta-label">Durée</div><div class="meta-value">À compléter</div></div>
+          <div class="meta-item"><div class="meta-label">Type</div><div class="meta-value">Robotique</div></div>
         </div>
       </div>
       <div class="projet-body">
         <div>
           <div class="projet-section-title">// Objectif</div>
           <div class="projet-section-h">Description du projet</div>
-          <p class="projet-text">
-            Décrivez ici les détails du projet : contexte, problème à résoudre, 
-            contraintes techniques, approche choisie, résultats obtenus...
-          </p>
+          <p class="projet-text">Décrivez ici les détails du projet : contexte, problème à résoudre, contraintes techniques...</p>
         </div>
         <div>
           <div class="projet-section-title">// Stack technique</div>
@@ -929,23 +613,16 @@
         </div>
       </div>
     </div>
-    <footer>
-      <p>© 2025 — Thomas Henry · Tous droits réservés</p>
-      <div class="rog-logo">PORTFOLIO</div>
-    </footer>
+    <footer><p>© 2025 — Thomas Henry · Tous droits réservés</p><div class="rog-logo">PORTFOLIO</div></footer>
   </div>
-
 
   <script>
     function showPage(pageId, scrollTo) {
-      // Masquer toutes les pages
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      // Afficher la page cible
       const target = document.getElementById('page-' + pageId);
       if (target) {
         target.classList.add('active');
         window.scrollTo({ top: 0, behavior: 'instant' });
-        // Si on veut scroller vers une section précise
         if (scrollTo) {
           setTimeout(() => {
             const el = document.getElementById(scrollTo);
@@ -954,7 +631,20 @@
         }
       }
     }
+    function toggleTheme() {
+      const body = document.body;
+      const isDark = body.getAttribute('data-theme') === 'dark';
+      body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('btn-dark').classList.toggle('active', !isDark);
+      document.getElementById('btn-light').classList.toggle('active', isDark);
+      localStorage.setItem('portfolio-theme', isDark ? 'light' : 'dark');
+    }
+    const saved = localStorage.getItem('portfolio-theme');
+    if (saved && saved !== 'dark') {
+      document.body.setAttribute('data-theme', saved);
+      document.getElementById('btn-dark').classList.remove('active');
+      document.getElementById('btn-light').classList.add('active');
+    }
   </script>
-
 </body>
 </html>
