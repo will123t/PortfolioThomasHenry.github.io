@@ -56,7 +56,7 @@
       color: var(--text);
       font-family: 'Rajdhani', sans-serif;
       overflow-x: hidden;
-      cursor: crosshair;
+      cursor: default ;
       transition: background 0.3s, color 0.3s;
     }
     body::before {
@@ -289,7 +289,129 @@
     .card-cta { font-family:'Share Tech Mono',monospace; font-size:0.72rem; color:var(--rouge-vif); letter-spacing:2px; text-transform:uppercase; display:flex; align-items:center; gap:0.4rem; margin-top:0.4rem; transition:gap 0.2s; }
     .card:hover .card-cta { gap: 0.8rem; }
     .card-cta::after { content: '→'; }
-    #competences-section { background: var(--bg); }
+    /* ── Frise chronologique ── */
+    #parcours-section { background: var(--bg); }
+    .timeline-outer {
+      overflow-x: auto;
+      overflow-y: visible;
+      cursor: grab;
+      user-select: none;
+      padding-bottom: 2rem;
+      /* Scrollbar stylisée */
+      scrollbar-width: thin;
+      scrollbar-color: var(--rouge) var(--border);
+    }
+    .timeline-outer:active { cursor: grabbing; }
+    .timeline-outer::-webkit-scrollbar { height: 4px; }
+    .timeline-outer::-webkit-scrollbar-track { background: var(--border); }
+    .timeline-outer::-webkit-scrollbar-thumb { background: var(--rouge); }
+    .timeline-track {
+      display: flex;
+      align-items: flex-start;
+      position: relative;
+      min-width: max-content;
+      padding: 4rem 4rem 1rem;
+      gap: 0;
+    }
+    /* Ligne horizontale */
+    .timeline-track::before {
+      content: '';
+      position: absolute;
+      top: calc(4rem + 8px);
+      left: 4rem;
+      right: 4rem;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--rouge) 5%, var(--rouge) 95%, transparent);
+    }
+    .tl-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 220px;
+      flex-shrink: 0;
+      position: relative;
+    }
+    /* Point sur la ligne */
+    .tl-dot {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--rouge-vif);
+      background: var(--bg);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .tl-item:hover .tl-dot {
+      background: var(--rouge-vif);
+      box-shadow: 0 0 16px var(--rouge-glow);
+    }
+    .tl-content {
+      margin-top: 1.8rem;
+      text-align: center;
+      padding: 0 1rem;
+    }
+    .tl-date {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--rouge-vif);
+      letter-spacing: 3px;
+      margin-bottom: 0.6rem;
+    }
+    .tl-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+    .tl-desc {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      letter-spacing: 0.5px;
+    }
+    .tl-badge {
+      display: inline-block;
+      margin-top: 0.6rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--rouge);
+      color: var(--rouge-vif);
+      background: rgba(204,0,0,0.06);
+      clip-path: polygon(0 0,calc(100% - 5px) 0,100% 5px,100% 100%,0 100%);
+    }
+    .tl-badge.current {
+      background: rgba(204,0,0,0.15);
+      border-color: var(--rouge-vif);
+      animation: pulse-badge 2s infinite;
+    }
+    @keyframes pulse-badge {
+      0%,100% { box-shadow: 0 0 0 0 rgba(204,0,0,0.3); }
+      50%      { box-shadow: 0 0 8px 3px rgba(204,0,0,0.15); }
+    }
+    /* Indicateur de scroll */
+    .timeline-hint {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .timeline-hint::after { content: '→→'; color: var(--rouge-vif); }
+
+    
     .skills-list { display:flex; flex-direction:column; gap:1.2rem; max-width:600px; }
     .skill-item { display:flex; flex-direction:column; gap:0.4rem; }
     .skill-header { display:flex; justify-content:space-between; font-family:'Share Tech Mono',monospace; font-size:0.8rem; letter-spacing:2px; color:var(--text-muted); }
@@ -365,6 +487,7 @@
     <ul>
       <li><a onclick="showPage('accueil')">Accueil</a></li>
       <li><a onclick="showPage('accueil', 'projets-section')">Projets</a></li>
+      <li><a onclick="showPage('accueil', 'parcours-section')">Parcours</a></li>
       <li><a onclick="showPage('accueil', 'competences-section')">Compétences</a></li>
       <li><a onclick="showPage('accueil', 'contact-section')">Contact</a></li>
     </ul>
@@ -379,7 +502,7 @@
     <section id="hero">
       <div class="hero-content">
         <div class="hero-tag">Portfolio · 2025</div>
-        <h1>HENRY<br><span class="accent">THOMAS</span></h1>
+        <h1>ThomasHENRY<br><span class="accent">HENRY</span></h1>
         <p class="hero-sub">
           Etudiant en GEII<br>
           j'ai différentes passions comme lire, coder.<br>
@@ -427,6 +550,47 @@
           <h3>Projet Autonome</h3>
           <p>Description de votre projet. Technologies utilisées, objectif, résultat.</p>
           <div class="card-cta">Voir le projet</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="parcours-section">
+      <div class="section-title">// Formation</div>
+      <h2>Mon Parcours</h2>
+      <div class="timeline-hint">Faites défiler</div>
+      <div class="timeline-outer" id="timeline-outer">
+        <div class="timeline-track">
+
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <div class="tl-date">2022 — 2025</div>
+              <div class="tl-title">Lycée Général</div>
+              <div class="tl-desc">Formation générale<br>avec spécialités<br>scientifiques.</div>
+              <span class="tl-badge">Bac Général</span>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <div class="tl-date">2025 — 2026</div>
+              <div class="tl-title">1ère Année<br>GEII</div>
+              <div class="tl-desc">Génie Électrique<br>et Informatique<br>Industrielle.</div>
+              <span class="tl-badge current">En cours</span>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <div class="tl-date">2026 — 2027</div>
+              <div class="tl-title">2ème Année<br>GEII</div>
+              <div class="tl-desc">Approfondissement<br>électronique &amp;<br>automatisme.</div>
+              <span class="tl-badge">À venir</span>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -644,6 +808,24 @@
       document.body.setAttribute('data-theme', saved);
       document.getElementById('btn-dark').classList.remove('active');
       document.getElementById('btn-light').classList.add('active');
+    }
+    // Drag to scroll frise
+    const tl = document.getElementById('timeline-outer');
+    if (tl) {
+      let isDown = false, startX, scrollLeft;
+      tl.addEventListener('mousedown', e => {
+        isDown = true;
+        startX = e.pageX - tl.offsetLeft;
+        scrollLeft = tl.scrollLeft;
+      });
+      tl.addEventListener('mouseleave', () => isDown = false);
+      tl.addEventListener('mouseup', () => isDown = false);
+      tl.addEventListener('mousemove', e => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - tl.offsetLeft;
+        tl.scrollLeft = scrollLeft - (x - startX) * 1.5;
+      });
     }
   </script>
 </body>
