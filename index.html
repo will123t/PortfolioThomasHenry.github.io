@@ -398,6 +398,104 @@
       0%,100% { box-shadow: 0 0 0 0 rgba(204,0,0,0.3); }
       50%      { box-shadow: 0 0 8px 3px rgba(204,0,0,0.15); }
     }
+        /* ── Compétences — layout 2 colonnes ── */
+    .competences-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    /* Barres (gauche) */
+    .skills-list { display:flex; flex-direction:column; gap:1.2rem; }
+    .skill-item { display:flex; flex-direction:column; gap:0.4rem; }
+    .skill-header { display:flex; justify-content:space-between; font-family:'Share Tech Mono',monospace; font-size:0.8rem; letter-spacing:2px; color:var(--text-muted); }
+    .skill-pct { color: var(--rouge-vif); }
+    .skill-bar { height:4px; background:var(--border); }
+    .skill-fill { height:100%; background:linear-gradient(90deg,var(--rouge),var(--rouge-vif)); animation:grow 1.4s ease-out forwards; transform-origin:left; transform:scaleX(0); }
+    @keyframes grow { to { transform: scaleX(1); } }
+
+    /* Grille outils (droite) */
+    .tools-panel {}
+    .tools-panel-title {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--rouge-vif);
+      margin-bottom: 1rem;
+    }
+    .tools-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.4rem;
+    }
+    .filter-btn {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 0 100%);
+    }
+    .filter-btn:hover { border-color: var(--rouge); color: var(--text); }
+    .filter-btn.active {
+      background: var(--rouge);
+      border-color: var(--rouge);
+      color: #fff;
+      box-shadow: 0 0 10px var(--rouge-glow);
+    }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.7rem;
+    }
+    .tool-card {
+      background: var(--tool-bg);
+      border: 1px solid var(--border);
+      padding: 0.9rem 0.6rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: default;
+      transition: all 0.25s;
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+    }
+    .tool-card:hover {
+      border-color: var(--rouge);
+      background: var(--tool-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px var(--rouge-glow);
+    }
+    .tool-card[data-hidden="true"] { display: none; }
+    .tool-icon {
+      font-size: 1.6rem;
+      line-height: 1;
+    }
+    .tool-name {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text);
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    .tool-cat {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--rouge-vif);
+    }
+
     /* Indicateur de scroll */
     .timeline-hint {
       font-family: 'Share Tech Mono', monospace;
