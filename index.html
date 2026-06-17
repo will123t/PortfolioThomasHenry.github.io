@@ -955,6 +955,20 @@
       document.getElementById('btn-dark').classList.remove('active');
       document.getElementById('btn-light').classList.add('active');
     }
+    // Filtres outils
+    function filterTools(btn) {
+      const filter = btn.getAttribute('data-filter');
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.tool-card').forEach(card => {
+        if (filter === 'tous' || card.getAttribute('data-cat') === filter) {
+          card.removeAttribute('data-hidden');
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
     // Drag to scroll frise
     const tl = document.getElementById('timeline-outer');
     if (tl) {
