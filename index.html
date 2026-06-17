@@ -595,29 +595,124 @@
       </div>
     </section>
 
+    <!-- ══════════ COMPÉTENCES ══════════ -->
     <section id="competences-section">
       <div class="section-title">// Compétences</div>
       <h2>Mes Compétences</h2>
-      <div class="skills-list">
-        <div class="skill-item">
-          <div class="skill-header"><span>consevoir</span><span class="skill-pct">90%</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+
+      <div class="competences-layout">
+
+        <!-- Colonne gauche : barres de progression -->
+        <div class="skills-list">
+          <div class="skill-item">
+            <div class="skill-header"><span>Concevoir</span><span class="skill-pct">90%</span></div>
+            <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header"><span>Vérifier</span><span class="skill-pct">80%</span></div>
+            <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header"><span>Maintenir</span><span class="skill-pct">70%</span></div>
+            <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header"><span>À remplacer</span><span class="skill-pct">65%</span></div>
+            <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header"><span>À remplacer</span><span class="skill-pct">85%</span></div>
+            <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+          </div>
         </div>
-        <div class="skill-item">
-          <div class="skill-header"><span>Vérifier</span><span class="skill-pct">80%</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-header"><span>Maitenir</span><span class="skill-pct">70%</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-header"><span>À remplacer</span><span class="skill-pct">65%</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-header"><span>À remplacer</span><span class="skill-pct">85%</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+
+        <!-- Colonne droite : grille d'outils avec filtres et nouvelles images -->
+        <div class="tools-panel">
+          <div class="tools-panel-title">// Outils &amp; Logiciels</div>
+
+          <div class="tools-filters">
+            <button class="filter-btn active" data-filter="tous" onclick="filterTools(this)">Tous</button>
+            <button class="filter-btn" data-filter="electronique" onclick="filterTools(this)">Électronique</button>
+            <button class="filter-btn" data-filter="automatisme" onclick="filterTools(this)">Automatisme</button>
+            <button class="filter-btn" data-filter="informatique" onclick="filterTools(this)">Informatique</button>
+            <button class="filter-btn" data-filter="bureautique" onclick="filterTools(this)">Bureautique</button>
+          </div>
+
+          <div class="tools-grid" id="tools-grid">
+            
+            <!-- CARD: Arduino -->
+            <div class="tool-card" data-cat="electronique">
+              <div class="tool-icon">
+                <img src="Arduino_Uno_logo.png" alt="Arduino" style="height: 35px; width: auto; object-fit: contain;">
+              </div>
+              <div class="tool-name">Arduino</div>
+              <div class="tool-cat">Électronique</div>
+            </div>
+
+            <!-- CARD: STM32Cube -->
+            <div class="tool-card" data-cat="electronique">
+              <div class="tool-icon">
+                <img src="5483238-middle.png" alt="STM32Cube" style="height: 38px; width: auto; object-fit: contain;">
+              </div>
+              <div class="tool-name">STM32Cube</div>
+              <div class="tool-cat">Électronique</div>
+            </div>
+
+            <!-- CARD: Maple -->
+            <div class="tool-card" data-cat="automatisme">
+              <div class="tool-icon">
+                <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/0/0f/Maple_Logo.svg/330px-Maple_Logo.svg.png?_=20170815161002" alt="Maple" style="height: 32px; width: auto; object-fit: contain;">
+              </div>
+              <div class="tool-name">Maple</div>
+              <div class="tool-cat">Automatisme</div>
+            </div>
+
+            <!-- CARD: VS Code -->
+            <div class="tool-card" data-cat="informatique">
+              <div class="tool-icon">
+                <img src="Visual_Studio_Code_1.35_icon.svg.png" alt="VS Code" style="height: 35px; width: auto; object-fit: contain;">
+              </div>
+              <div class="tool-name">VS Code</div>
+              <div class="tool-cat">Informatique</div>
+            </div>
+
+            <!-- CARD: Excel -->
+            <div class="tool-card" data-cat="bureautique">
+              <div class="tool-icon">
+                <img src="Microsoft_Office_Excel_(2019–2025).svg.png" alt="Excel" style="height: 35px; width: auto; object-fit: contain;">
+              </div>
+              <div class="tool-name">Excel</div>
+              <div class="tool-cat">Bureautique</div>
+            </div>
+
+            <!-- CARD: Google Docs -->
+            <div class="tool-card" data-cat="bureautique">
+              <div class="tool-icon">
+                <img src="Google_Docs_logo_(2014-2020).svg.png" alt="Google Docs" style="height: 35px; width: auto; object-fit: contain;">
+              </div>
+              <div class="tool-name">Google Docs</div>
+              <div class="tool-cat">Bureautique</div>
+            </div>
+
+            <!-- CARD: Google Drive -->
+            <div class="tool-card" data-cat="bureautique">
+              <div class="tool-icon">
+                <img src="Google_Drive_logo.png" alt="Google Drive" style="height: 35px; width: auto; object-fit: contain;">
+              </div>
+              <div class="tool-name">Drive</div>
+              <div class="tool-cat">Bureautique</div>
+            </div>
+
+            <!-- CARD: Canva -->
+            <div class="tool-card" data-cat="bureautique">
+              <div class="tool-icon">
+                <img src="canva.png" alt="Canva" style="height: 35px; width: auto; object-fit: contain; border-radius: 4px;">
+              </div>
+              <div class="tool-name">Canva</div>
+              <div class="tool-cat">Bureautique</div>
+            </div>
+
+          </div>
         </div>
       </div>
     </section>
